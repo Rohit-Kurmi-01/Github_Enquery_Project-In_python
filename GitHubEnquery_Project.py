@@ -1,5 +1,4 @@
-import requests 
-from datetime import datetime
+import requests
 
 def fetch_image(data):
     image_url = data["avatar_url"]
@@ -23,13 +22,19 @@ def fetch_followers_following(data):
     return f"Followers: {followers}, Following: {following}"
 
 def fetch_date_of_creation(data):
-    date_str = data["created_at"]
-    # Parsing the date string 
-    date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ") 
-    # Converting to desired 
-    formatted_date = date_obj.strftime("%Y-%m-%d %H:%M:%S")
+    date_of_creation = data["created_at"]
+    return f"Date of Creation: {date_of_creation}"
 
-    return f"Formatted Date and Time: {formatted_date}"
+def fetch_repositories(username):
+    url = f"https://api.github.com/users/{username}/repos"
+    response = requests.get(url)
+    repos_data = response.json()
+    
+    if response.status_code == 200:
+        repo_names = [repo['name'] for repo in repos_data]
+        return "\n".join(f"{index + 1}. {name}" for index, name in enumerate(repo_names))
+    else:
+        raise Exception("Failed to fetch repositories")
 
 def api_request(enquiry_no, username):
     url = f"https://api.github.com/users/{username}"
@@ -50,6 +55,8 @@ def api_request(enquiry_no, username):
                 return fetch_followers_following(data)
             case '6':
                 return fetch_date_of_creation(data)
+            case '7':
+                return fetch_repositories(username)
             case _:
                 return "--> Invalid Enquiry Number. Please Try Again <--"
     else:
@@ -67,19 +74,20 @@ def main():
         print("4. Public Repositories of your GitHub")
         print("5. Followers & Following of your GitHub")
         print("6. Date of Creation of your GitHub Account")
-        print("7. Nothing! Please Exit")
+        print("7. List All Repositories of your GitHub")
+        print("8. Nothing! Please Exit")
         print(50 * "*")
         
         enquiry_no = input("Enter Your Enquiry No.: ")
         
-        if enquiry_no == '7':
+        if enquiry_no == '8':
             print("Thank you for using GitHub Enquiry")
             break
         else:
             username = input("Enter Your GitHub Username: ")
             try:
                 result = api_request(enquiry_no, username)
-                print(result)
+                print(f"Enquiry Result:\n{result}")
             except Exception as e:
                 print(f"Error: {e}")
             print(50 * "-" + " Exit " + 50 * "-")
