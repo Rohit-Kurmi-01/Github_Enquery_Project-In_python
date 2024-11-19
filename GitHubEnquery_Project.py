@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 # -----------------------------------------Imports--------------------------------------------------------------------------------
 import requests
 
 # -----------------------------------------Functions------------------------------------------------------------------------------
+=======
+import requests
+
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
 def fetch_image(data):
     image_url = data["avatar_url"]
     return f"Avatar URL: {image_url}"
@@ -27,8 +32,11 @@ def fetch_date_of_creation(data):
     date_of_creation = data["created_at"]
     return f"Date of Creation: {date_of_creation}"
 
+<<<<<<< HEAD
 # -----------------------------------------API Request for Repositories----------------------------------------------------------------------------
 
+=======
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
 def fetch_repositories(username):
     url = f"https://api.github.com/users/{username}/repos"
     response = requests.get(url)
@@ -40,12 +48,19 @@ def fetch_repositories(username):
     else:
         raise Exception("Failed to fetch repositories")
 
+<<<<<<< HEAD
 # -----------------------------------------API Request for user Details----------------------------------------------------------------------------
+=======
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
 def api_request(enquiry_no, username):
     url = f"https://api.github.com/users/{username}"
     response = requests.get(url)
     data = response.json()
+<<<<<<< HEAD
     # -------------------------------------------------Handling Enquiry Number-------------------------------------------------------------
+=======
+    
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
     if response.status_code == 200:
         match enquiry_no:
             case '1':
@@ -67,11 +82,15 @@ def api_request(enquiry_no, username):
     else:
         raise Exception("Failed to fetch user data")
 
+<<<<<<< HEAD
 # -----------------------------------------Main Function----------------------------------------------------------------------------
 
 def main():
 
     # ------------------------------First Iteration of user -----------------------------------
+=======
+def main():
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
     while True:
         print(50 * "*")
         print("WELCOME TO GITHUB ENQUIRY")
@@ -88,11 +107,16 @@ def main():
         print(50 * "*")
         
         enquiry_no = input("Enter Your Enquiry No.: ")
+<<<<<<< HEAD
         # -------------------------------------------------Handling Exit--------------------------------------------------------------
+=======
+        
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
         if enquiry_no == '8':
             print("Thank you for using GitHub Enquiry")
             break
         else:
+<<<<<<< HEAD
         # -------------------------------------------------Handling User Input--------------------------------------------------------------
             username = input("Enter Your GitHub Username: ")
             try:
@@ -106,5 +130,15 @@ def main():
 
 # -----------------------------------------Main Function Call----------------------------------------------------------------------------
 
+=======
+            username = input("Enter Your GitHub Username: ")
+            try:
+                result = api_request(enquiry_no, username)
+                print(f"Enquiry Result:\n{result}")
+            except Exception as e:
+                print(f"Error: {e}")
+            print(50 * "-" + " Exit " + 50 * "-")
+
+>>>>>>> fb259a028dc82760a1b4e3ec0ad84c7fbd261ad6
 if __name__ == "__main__":
     main()
